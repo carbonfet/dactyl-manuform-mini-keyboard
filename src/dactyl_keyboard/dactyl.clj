@@ -16,19 +16,19 @@
 (def nrows 5)
 (def ncols 7)
 
-(def α (/ π 12))                        ; curvature of the columns
-(def β (/ π 36))                        ; curvature of the rows
-(def centerrow (- nrows 3))             ; controls front-back tilt
-(def centercol 4)                       ; controls left-right tilt / tenting (higher number is more tenting)
-(def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
+(def α (/ π 12))                       ; curvature of the columns
+(def β (/ π 36))                       ; curvature of the rows
+(def centerrow (- nrows 3))            ; controls front-back tilt
+(def centercol 4)                      ; controls left-right tilt / tenting (higher number is more tenting)
+(def tenting-angle (/ π 12))           ; or, change this for more precise tenting control
 
 (def pinky-15u true)                   ; controls whether the outer column uses 1.5u keys
-(def first-15u-row 0)                   ; controls which should be the first row to have 1.5u keys on the outer column
-(def last-15u-row 3)                    ; controls which should be the last row to have 1.5u keys on the outer column
+(def first-15u-row 0)                  ; controls which should be the first row to have 1.5u keys on the outer column
+(def last-15u-row 3)                   ; controls which should be the last row to have 1.5u keys on the outer column
 
-(def extra-row true)                   ; adds an extra bottom row to the outer columns
+(def extra-row true)                   ; adds an extra bottom row to the outer column(s)
 (def inner-column true)                ; adds an extra inner column (two less rows than nrows)
-(def thumb-style "cf")                ; toggles between "default", "mini", and "cf" thumb cluster
+(def thumb-style "cf")                 ; toggles between "manuform", "mini", and "cf" thumb cluster
 
 (def column-style :standard)
 
@@ -36,32 +36,23 @@
   (if inner-column
     (cond (<= column 1) [0 -2 0]
           (= column 3) [0 2.82 -4.5]
-          (>= column 5) [0 -12 5.64]    ; original [0 -5.8 5.64]
+          (>= column 5) [0 -12 5.64]   ; original [0 -5.8 5.64]
           :else [0 0 0])
-    (cond (= column 2) [0 2.82 -4.5]
-          (>= column 4) [0 -12 5.64]    ; original [0 -5.8 5.64]
+    (cond (= column 0) [0 -2 0]
+		  (= column 2) [0 2.82 -4.5]
+          (>= column 4) [0 -12 5.64]   ; original [0 -5.8 5.64]
           :else [0 0 0])))
 
 (def thumb-offsets [6 -3 7])
 
-(def keyboard-z-offset 8)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
+(def keyboard-z-offset 8)              ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
-(def extra-width 2.5)                   ; extra space between the base of keys; original= 2
-(def extra-height 1.0)                  ; original= 0.5
+(def extra-width 2.5)                  ; extra space between the base of keys; original= 2
+(def extra-height 1.0)                 ; original= 0.5
 
 (def wall-z-offset -8)                 ; length of the first downward-sloping part of the wall (negative)
-(def wall-xy-offset 5)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
-(def wall-thickness 2)                  ; wall thickness parameter; originally 5
-
-;; Settings for column-style == :fixed
-;; The defaults roughly match Maltron settings
-;; http://patentimages.storage.googleapis.com/EP0219944A2/imgf0002.png
-;; Fixed-z overrides the z portion of the column ofsets above.
-;; NOTE: THIS DOESN'T WORK QUITE LIKE I'D HOPED.
-(def fixed-angles [(deg2rad 10) (deg2rad 10) 0 0 0 (deg2rad -15) (deg2rad -15)])
-(def fixed-x [-41.5 -22.5 0 20.3 41.4 65.5 89.6])  ; relative to the middle finger
-(def fixed-z [12.1    8.3 0  5   10.7 14.5 17.5])
-(def fixed-tenting (deg2rad 0))
+(def wall-xy-offset 5)                 ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
+(def wall-thickness 2)                 ; wall thickness parameter; originally 5
 
 ; If you use Cherry MX or Gateron switches, this can be turned on.
 ; If you use other switches such as Kailh, you should set this as false
@@ -210,26 +201,8 @@
                           (rotate-y-fn  column-angle)
                           (translate-fn [0 0 column-radius])
                           (translate-fn (column-offset column)))
-        column-z-delta (* column-radius (- 1 (Math/cos column-angle)))
-        placed-shape-ortho (->> shape
-                                (translate-fn [0 0 (- row-radius)])
-                                (rotate-x-fn  (* α (- centerrow row)))
-                                (translate-fn [0 0 row-radius])
-                                (rotate-y-fn  column-angle)
-                                (translate-fn [(- (* (- column centercol) column-x-delta)) 0 column-z-delta])
-                                (translate-fn (column-offset column)))
-        placed-shape-fixed (->> shape
-                                (rotate-y-fn  (nth fixed-angles column))
-                                (translate-fn [(nth fixed-x column) 0 (nth fixed-z column)])
-                                (translate-fn [0 0 (- (+ row-radius (nth fixed-z column)))])
-                                (rotate-x-fn  (* α (- centerrow row)))
-                                (translate-fn [0 0 (+ row-radius (nth fixed-z column))])
-                                (rotate-y-fn  fixed-tenting)
-                                (translate-fn [0 (second (column-offset column)) 0]))]
-    (->> (case column-style
-               :orthographic placed-shape-ortho
-               :fixed        placed-shape-fixed
-               placed-shape)
+        column-z-delta (* column-radius (- 1 (Math/cos column-angle)))]
+    (->> (case column-style placed-shape)
          (rotate-y-fn  tenting-angle)
          (translate-fn [0 0 keyboard-z-offset]))))
 
@@ -424,9 +397,9 @@
                (key-place (inc column) row web-post-bl)
                (key-place column row web-post-br)))))))
 
-;;;;;;;;;;;;;;;;;;;
-;; Default Thumb ;;
-;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
+;; Manuform Thumb ;;
+;;;;;;;;;;;;;;;;;;;;
 
 (def thumborigin
   (map + (key-position (+ innercol-offset 1) cornerrow [(/ mount-width 2) (- (/ mount-height 2)) 0])
@@ -952,7 +925,7 @@
        (key-place (+ innercol-offset 4) cornerrow web-post-bl))))))
 
 ;switching connectors, switchplates, etc. depending on thumb-style used
-(when (= thumb-style "default")
+(when (= thumb-style "manuform")
   (def thumb-type thumb)
   (def thumb-connector-type thumb-connectors)
   (def thumbcaps-type thumbcaps)
@@ -1189,7 +1162,7 @@
        (key-place 1 cornerrow web-post-bl)
        (minithumb-tl-place minithumb-post-tl))))))
 
-(def default-thumb-wall
+(def manuform-thumb-wall
   (union
    ; thumb walls
    (wall-brace thumb-mr-place  0 -1 web-post-br thumb-tr-place  0 -1 thumb-post-br)
@@ -1260,7 +1233,7 @@
 ;switching walls depending on thumb-style used
 (def thumb-wall-type
   (case thumb-style
-    "default" default-thumb-wall
+    "manuform" manuform-thumb-wall
     "cf" cf-thumb-wall
     "mini" mini-thumb-wall))
 
