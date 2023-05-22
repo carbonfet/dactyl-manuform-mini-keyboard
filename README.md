@@ -5,13 +5,24 @@ This is a fork of the [Dactyl-ManuForm](https://github.com/tshort/dactyl-keyboar
 ## Features
 
 - The use of sidenubs can be disabled. Sidenub should be disabled if you use Kailh, and Outemu. If you use Cherry MX, Gateron or Zealios switches, you can enable the sidenubs.
-- Toggle for outer column between using 1.5u sized keys and 1u sized keys.
-- If enabled, the rows which use 1.5u sized keys can be specified.
+
+![sidenubs](https://i.imgur.com/bCpeHjh.png)
+- Toggle for outer column between using 1.5u sized keys and 1u sized keys. If enabled, the rows which use 1.5u sized keys can be specified.
+
+![1.5u outer column](https://i.imgur.com/3hZadLK.png)
 - Toggle for an extra row of keys for the outer column(s).
+
+![extra bottom row](https://i.imgur.com/Gw3qk6Q.png)
 - Toggle for an extra inner column before the thumbcluster with (nrows-2) rows.
-- Toggle between using the default thumb cluster, the mini thumb cluster designed by [l4u](https://github.com/l4u/dactyl-manuform-mini-keyboard), and a new thumb cluster.
-- This new thumb cluster uses the same keycaps as the default, but is more compact. The thumb only has to move one position left or right from its neutral position to reach all the keys. 
-- Removable controller board / TRRS jack holder as a separate part. This holder is then friction fit into a cutout on the back wall of the case. Designed for common TRRS breakout boards. 
+
+![inner column](https://i.imgur.com/GnxvHOQ.png)
+- Toggle between using the manuform thumb cluster, the mini thumb cluster designed by [l4u](https://github.com/l4u/dactyl-manuform-mini-keyboard), and the cf thumb cluster.
+- The cf thumb cluster uses the same keycaps as the manuform, but is more compact. The thumb only has to move one position left or right from its neutral position to reach all the keys. 
+
+![thumb clusters](https://i.imgur.com/3dvW10o.png)
+- Removable MCU / TRRS jack holder as a separate part. This holder slides into a cutout on the back wall of the case. Designed for common TRRS breakout boards.
+
+![MCU holder](https://i.imgur.com/wwKsOYR.png) 
 - Models for both pro-micro and elite-c holders in the [things/](things/) directory. 
 
 ## Generate OpenSCAD and STL models
