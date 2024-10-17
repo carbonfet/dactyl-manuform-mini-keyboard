@@ -20,7 +20,7 @@ This is a fork of the [Dactyl-ManuForm](https://github.com/tshort/dactyl-keyboar
 - The cf thumb cluster uses the same keycaps as the manuform, but is more compact. The thumb only has to move one position left or right from its neutral position to reach all the keys. 
 
 ![thumb clusters](https://i.imgur.com/3dvW10o.png)
-- Removable MCU holder. This holder slides into a cutout on the back wall of the case. Designed for RP2040 based MCU shown [here](https://www.reddit.com/r/ErgoMechKeyboards/comments/1304ucc/new_mcu_for_dactyls_using_an_rp2040/).
+- Removable MCU holder. This holder slides into a cutout on the back wall of the case. Designed for RP2040 based MCU shown [here](https://www.reddit.com/r/ErgoMechKeyboards/comments/1304ucc/new_mcu_for_dactyls_using_an_rp2040/). For case sizes that are 5x6 or smaller, use 2040 holder (alt).step. 
 
 ![MCU holder](https://i.imgur.com/PKbbydM.png) 
 
